@@ -20,6 +20,15 @@ app.use(express.json()); // to accept json data
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "../frontend/build", "index.html")
+    );
+  });
+}
 
 // Error Handling middlewares
 app.use(notFound);
@@ -71,12 +80,3 @@ io.on("connection", (socket) => {
     socket.leave(userData._id);
   });
 });
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "../frontend/build", "index.html")
-    );
-  });
-}
