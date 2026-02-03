@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import Chatbox from "../components/Chatbox";
 import MyChats from "../components/MyChats";
